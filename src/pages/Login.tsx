@@ -76,8 +76,12 @@ export default function Login() {
 
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
-          <h1 className="text-3xl font-bold text-neutral-900 mb-2">Войти в платформу</h1>
-          <p className="text-neutral-500 mb-8">Введите данные для входа</p>
+          <h1 className="text-3xl font-bold text-neutral-900 mb-2">
+            {role === "teacher" && mode === "register" ? "Регистрация учителя" : "Войти в платформу"}
+          </h1>
+          <p className="text-neutral-500 mb-8">
+            {role === "student" ? "Введите данные, которые вам прислал учитель" : mode === "register" ? "Создайте аккаунт учителя" : "Введите ваши данные для входа"}
+          </p>
 
           <div className="flex mb-8 border border-neutral-200 bg-white p-1 gap-1">
             <button
@@ -132,10 +136,21 @@ export default function Login() {
 
             {role === "teacher" && (
               <>
+                {mode === "register" && (
+                  <div>
+                    <label className="block text-xs uppercase tracking-wide text-neutral-500 mb-2">Ваше имя</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Как вас зовут?"
+                      value={teacherName}
+                      onChange={(e) => setTeacherName(e.target.value)}
+                      className="w-full border border-neutral-200 bg-white px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-neutral-900 transition-colors"
+                    />
+                  </div>
+                )}
                 <div>
-                  <label className="block text-xs uppercase tracking-wide text-neutral-500 mb-2">
-                    Логин
-                  </label>
+                  <label className="block text-xs uppercase tracking-wide text-neutral-500 mb-2">Логин</label>
                   <input
                     type="text"
                     required
@@ -146,9 +161,7 @@ export default function Login() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs uppercase tracking-wide text-neutral-500 mb-2">
-                    Пароль
-                  </label>
+                  <label className="block text-xs uppercase tracking-wide text-neutral-500 mb-2">Пароль</label>
                   <input
                     type="password"
                     required
@@ -162,7 +175,10 @@ export default function Login() {
             )}
 
             {error && (
-              <p className="text-red-500 text-sm">{error}</p>
+              <p className="text-red-500 text-sm bg-red-50 border border-red-200 px-4 py-3">{error}</p>
+            )}
+            {success && (
+              <p className="text-green-700 text-sm bg-green-50 border border-green-200 px-4 py-3">{success}</p>
             )}
 
             <button
@@ -170,7 +186,7 @@ export default function Login() {
               disabled={loading}
               className="mt-2 bg-neutral-900 text-white py-3 text-sm uppercase tracking-widest font-semibold hover:bg-neutral-700 transition-colors duration-300 cursor-pointer disabled:opacity-50"
             >
-              {loading ? "Входим..." : "Войти"}
+              {loading ? "Подождите..." : role === "teacher" && mode === "register" ? "Зарегистрироваться" : "Войти"}
             </button>
           </form>
 
@@ -182,10 +198,19 @@ export default function Login() {
 
           {role === "teacher" && (
             <p className="mt-6 text-sm text-neutral-400 text-center">
-              Нет аккаунта?{" "}
-              <Link to="/register" className="text-neutral-700 underline">
-                Зарегистрироваться
-              </Link>
+              {mode === "login" ? (
+                <>Нет аккаунта?{" "}
+                  <button onClick={() => { setMode("register"); setError(""); setSuccess(""); }} className="text-neutral-700 underline cursor-pointer">
+                    Зарегистрироваться
+                  </button>
+                </>
+              ) : (
+                <>Уже есть аккаунт?{" "}
+                  <button onClick={() => { setMode("login"); setError(""); setSuccess(""); }} className="text-neutral-700 underline cursor-pointer">
+                    Войти
+                  </button>
+                </>
+              )}
             </p>
           )}
         </div>
