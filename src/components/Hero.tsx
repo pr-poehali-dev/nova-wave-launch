@@ -26,12 +26,18 @@ export default function Hero() {
       </motion.div>
 
       <div className="relative z-10 text-center text-white">
+        <p className="text-xs md:text-sm uppercase tracking-[0.3em] mb-4 opacity-70">Платформа по русскому языку</p>
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6">
-          ОТКРОЙ
+          ПИШЕМ
+          <br />
+          ГРАМОТНО
         </h1>
         <p className="text-lg md:text-xl max-w-2xl mx-auto px-6 opacity-90">
-          Исследуй границы дизайна с иммерсивным параллакс-эффектом
+          Индивидуальные задания, умный самоанализ и рост — шаг за шагом
         </p>
+        <button className="mt-10 bg-white text-neutral-900 px-8 py-3 text-sm uppercase tracking-widest font-semibold hover:bg-neutral-200 transition-colors duration-300 cursor-pointer">
+          Начать обучение
+        </button>
       </div>
     </div>
   );
