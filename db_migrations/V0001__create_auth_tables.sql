@@ -1,0 +1,25 @@
+
+CREATE TABLE teachers (
+  id SERIAL PRIMARY KEY,
+  login VARCHAR(100) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  name VARCHAR(200) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE students (
+  id SERIAL PRIMARY KEY,
+  teacher_id INTEGER REFERENCES teachers(id),
+  name VARCHAR(200) NOT NULL,
+  access_code VARCHAR(20) UNIQUE NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE sessions (
+  id SERIAL PRIMARY KEY,
+  user_type VARCHAR(10) NOT NULL,
+  user_id INTEGER NOT NULL,
+  token VARCHAR(64) UNIQUE NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  expires_at TIMESTAMP NOT NULL
+);
